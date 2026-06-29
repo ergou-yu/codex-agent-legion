@@ -1,0 +1,428 @@
+{
+  "schema_version": "1.0.0",
+  "legion_name": "codex-gpt55-agent-legion",
+  "workspace": ".",
+  "source_files": {
+    "rulebook": "multi-agent-workflow-rulebook.md",
+    "github_metadata": "agent-github-metadata.tsv",
+    "known_external_repo_root": "external-agent-repos"
+  },
+  "commander": {
+    "id": "codex-gpt55-commander",
+    "runtime": "codex",
+    "model": "gpt-5.5",
+    "authority": [
+      "understand_user_goal",
+      "decide_split_or_solo",
+      "assign_agent_ownership",
+      "protect_secrets_and_private_state",
+      "integrate_outputs",
+      "run_final_validation",
+      "deliver_final_answer"
+    ],
+    "cannot_delegate": [
+      "final_acceptance",
+      "secret_handling",
+      "destructive_git_operations",
+      "payments_or_external_messages",
+      "production_write_operations_without_confirmation"
+    ]
+  },
+  "default_policy": {
+    "dispatch_strategy": "conservative-heuristic-until-user-algorithm",
+    "max_parallel_agents": 5,
+    "default_subagent_model_policy": "inherit_commander_model",
+    "prefer_builtin_codex_agents": true,
+    "external_agents_default_status": "candidate_only",
+    "require_disjoint_write_scopes": true,
+    "require_commander_final_review": true,
+    "sensitive_task_agent_cap": 1,
+    "timeout_minutes": {
+      "explorer": 15,
+      "worker": 30,
+      "reviewer": 20,
+      "external_candidate": 45
+    }
+  },
+  "scaling_policy": [
+    {
+      "level": "solo",
+      "subagent_count": 0,
+      "use_when": [
+        "single_file_change",
+        "simple_question",
+        "short_command",
+        "sensitive_context"
+      ]
+    },
+    {
+      "level": "single_specialist",
+      "subagent_count": 1,
+      "use_when": [
+        "one_clear_research_question",
+        "small_bounded_patch",
+        "targeted_review"
+      ]
+    },
+    {
+      "level": "squad",
+      "subagent_count": 2,
+      "use_when": [
+        "research_plus_implementation",
+        "implementation_plus_review",
+        "two_disjoint_modules"
+      ]
+    },
+    {
+      "level": "strike_team",
+      "subagent_count": 3,
+      "use_when": [
+        "code_plus_data_plus_review",
+        "frontend_and_backend_with_independent_files",
+        "parallel_exploration_needed"
+      ]
+    },
+    {
+      "level": "legion",
+      "subagent_count": 4,
+      "max_subagent_count": 5,
+      "use_when": [
+        "large_multi_surface_project",
+        "clear_module_ownership_exists",
+        "user_explicitly_requests_many_agents"
+      ]
+    }
+  ],
+  "builtin_agents": [
+    {
+      "id": "codex-explorer",
+      "role": "Explorer",
+      "runtime": "multi_agent_v1",
+      "agent_type": "explorer",
+      "model_policy": "inherit",
+      "capability_tags": [
+        "read_code",
+        "research_local_context",
+        "cite_files",
+        "risk_scan"
+      ],
+      "default_permissions": [
+        "read_workspace",
+        "run_safe_read_commands"
+      ],
+      "forbidden": [
+        "edit_files",
+        "destructive_commands",
+        "secret_extraction"
+      ],
+      "prompt_template": "prompts/explorer.md"
+    },
+    {
+      "id": "codex-worker",
+      "role": "Code Worker",
+      "runtime": "multi_agent_v1",
+      "agent_type": "worker",
+      "model_policy": "inherit",
+      "capability_tags": [
+        "edit_bounded_files",
+        "run_tests",
+        "fix_bugs",
+        "implement_features"
+      ],
+      "default_permissions": [
+        "read_workspace",
+        "edit_owned_scope",
+        "run_project_verification"
+      ],
+      "forbidden": [
+        "git_reset_hard",
+        "revert_other_agents",
+        "edit_unowned_scope",
+        "send_external_messages"
+      ],
+      "prompt_template": "prompts/worker.md"
+    },
+    {
+      "id": "codex-reviewer",
+      "role": "Reviewer",
+      "runtime": "multi_agent_v1",
+      "agent_type": "explorer",
+      "model_policy": "inherit",
+      "capability_tags": [
+        "review_diff",
+        "find_regressions",
+        "test_gap_analysis"
+      ],
+      "default_permissions": [
+        "read_workspace",
+        "run_safe_read_commands"
+      ],
+      "forbidden": [
+        "edit_files",
+        "accept_own_changes_as_final"
+      ],
+      "prompt_template": "prompts/reviewer.md"
+    }
+  ],
+  "external_agent_candidates": [
+    {
+      "id": "browser-use",
+      "repo": "browser-use/browser-use",
+      "role": "Browser Worker",
+      "license": "MIT",
+      "url": "https://github.com/browser-use/browser-use",
+      "capability_tags": [
+        "browser_automation",
+        "web_form_qa",
+        "website_interaction"
+      ],
+      "prompt_template": "prompts/browser.md",
+      "activation": "only_when_browser_task_is_explicit_and_safe"
+    },
+    {
+      "id": "aider",
+      "repo": "Aider-AI/aider",
+      "role": "Code Worker",
+      "license": "Apache-2.0",
+      "url": "https://github.com/Aider-AI/aider",
+      "capability_tags": [
+        "small_patch",
+        "pair_programming",
+        "focused_refactor"
+      ],
+      "activation": "optional_for_small_bounded_code_patches"
+    },
+    {
+      "id": "mini-swe-agent",
+      "repo": "SWE-agent/mini-swe-agent",
+      "role": "Code Worker",
+      "license": "MIT",
+      "url": "https://github.com/SWE-agent/mini-swe-agent",
+      "capability_tags": [
+        "issue_fixing",
+        "test_running",
+        "lightweight_cli_agent"
+      ],
+      "activation": "optional_for_issue_style_code_repairs"
+    },
+    {
+      "id": "qwen-code",
+      "repo": "QwenLM/qwen-code",
+      "role": "Code Worker",
+      "license": "Apache-2.0",
+      "url": "https://github.com/QwenLM/qwen-code",
+      "capability_tags": [
+        "terminal_coding_agent",
+        "chinese_context",
+        "mcp"
+      ],
+      "activation": "optional_for_chinese_terminal_agent_work"
+    },
+    {
+      "id": "openhands",
+      "repo": "OpenHands/OpenHands",
+      "role": "Heavy Code Worker",
+      "license": "NOASSERTION",
+      "url": "https://github.com/OpenHands/OpenHands",
+      "capability_tags": [
+        "long_running_engineering",
+        "sandboxed_software_work",
+        "complex_code_tasks"
+      ],
+      "activation": "only_for_large_tasks_with_sandbox_plan"
+    },
+    {
+      "id": "deer-flow",
+      "repo": "bytedance/deer-flow",
+      "role": "Research Worker",
+      "license": "MIT",
+      "url": "https://github.com/bytedance/deer-flow",
+      "capability_tags": [
+        "deep_research",
+        "long_horizon_report",
+        "multi_source_synthesis"
+      ],
+      "prompt_template": "prompts/explorer.md",
+      "activation": "optional_for_long_research_tasks"
+    },
+    {
+      "id": "dbgpt",
+      "repo": "eosphoros-ai/DB-GPT",
+      "role": "Data Worker",
+      "license": "MIT",
+      "url": "https://github.com/eosphoros-ai/DB-GPT",
+      "capability_tags": [
+        "sql",
+        "bi_report",
+        "data_assistant"
+      ],
+      "prompt_template": "prompts/data.md",
+      "activation": "only_for_data_or_database_tasks"
+    },
+    {
+      "id": "langgraph",
+      "repo": "langchain-ai/langgraph",
+      "role": "Workflow Runtime",
+      "license": "MIT",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "capability_tags": [
+        "stateful_workflow",
+        "recoverable_agents",
+        "production_orchestration"
+      ],
+      "prompt_template": "prompts/workflow-runtime.md",
+      "activation": "optional_for_long_term_workflow_runtime"
+    },
+    {
+      "id": "agentscope",
+      "repo": "agentscope-ai/agentscope",
+      "role": "Workflow Runtime",
+      "license": "Apache-2.0",
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "capability_tags": [
+        "visible_runtime",
+        "multi_agent_session",
+        "controlled_agents"
+      ],
+      "prompt_template": "prompts/workflow-runtime.md",
+      "activation": "optional_for_observable_multi_agent_runtime"
+    },
+    {
+      "id": "crewAI",
+      "repo": "crewAIInc/crewAI",
+      "role": "Role Crew Runtime",
+      "license": "MIT",
+      "url": "https://github.com/crewAIInc/crewAI",
+      "capability_tags": [
+        "role_playing_agents",
+        "research_crew",
+        "writing_crew"
+      ],
+      "activation": "optional_for_role_based_research_or_ops"
+    },
+    {
+      "id": "ag2",
+      "repo": "ag2ai/ag2",
+      "role": "Conversation Runtime",
+      "license": "Apache-2.0",
+      "url": "https://github.com/ag2ai/ag2",
+      "capability_tags": [
+        "autogen_style",
+        "expert_panel",
+        "human_in_loop"
+      ],
+      "activation": "optional_for_dialogue_based_expert_groups"
+    },
+    {
+      "id": "agent-framework",
+      "repo": "microsoft/agent-framework",
+      "role": "Workflow Runtime",
+      "license": "MIT",
+      "url": "https://github.com/microsoft/agent-framework",
+      "capability_tags": [
+        "python_dotnet",
+        "enterprise_workflow",
+        "agent_orchestration"
+      ],
+      "activation": "optional_for_microsoft_stack_projects"
+    },
+    {
+      "id": "qwen-agent",
+      "repo": "QwenLM/Qwen-Agent",
+      "role": "Tool Agent Runtime",
+      "license": "Apache-2.0",
+      "url": "https://github.com/QwenLM/Qwen-Agent",
+      "capability_tags": [
+        "tool_calling",
+        "rag",
+        "code_interpreter",
+        "mcp"
+      ],
+      "activation": "optional_for_qwen_tooling_or_rag"
+    },
+    {
+      "id": "camel",
+      "repo": "camel-ai/camel",
+      "role": "Research Runtime",
+      "license": "Apache-2.0",
+      "url": "https://github.com/camel-ai/camel",
+      "capability_tags": [
+        "multi_agent_research",
+        "simulation",
+        "data_generation"
+      ],
+      "activation": "experimental_only"
+    },
+    {
+      "id": "openmanus",
+      "repo": "FoundationAgents/OpenManus",
+      "role": "General Task Agent",
+      "license": "MIT",
+      "url": "https://github.com/FoundationAgents/OpenManus",
+      "capability_tags": [
+        "general_agent",
+        "mcp_entry",
+        "manus_style"
+      ],
+      "activation": "experimental_only"
+    },
+    {
+      "id": "metagpt",
+      "repo": "FoundationAgents/MetaGPT",
+      "role": "Software Company Runtime",
+      "license": "MIT",
+      "url": "https://github.com/FoundationAgents/MetaGPT",
+      "capability_tags": [
+        "prd",
+        "architecture",
+        "software_sop"
+      ],
+      "activation": "optional_for_prd_to_code_prototypes"
+    },
+    {
+      "id": "chatdev",
+      "repo": "OpenBMB/ChatDev",
+      "role": "Visual Workflow Runtime",
+      "license": "Apache-2.0",
+      "url": "https://github.com/OpenBMB/ChatDev",
+      "capability_tags": [
+        "visual_workflow",
+        "multi_agent_platform",
+        "prototype"
+      ],
+      "activation": "experimental_only"
+    }
+  ],
+  "safety_gates": [
+    {
+      "id": "secrets",
+      "match_tags": [
+        "api_key",
+        "cookie",
+        "password",
+        "token",
+        "secret"
+      ],
+      "action": "commander_only_until_user_confirms"
+    },
+    {
+      "id": "external_side_effects",
+      "match_tags": [
+        "payment",
+        "send_message",
+        "send_email",
+        "publish",
+        "delete",
+        "production_write"
+      ],
+      "action": "require_explicit_confirmation"
+    },
+    {
+      "id": "shared_file_editing",
+      "match_tags": [
+        "same_file_multi_worker"
+      ],
+      "action": "serialize_workers"
+    }
+  ]
+}

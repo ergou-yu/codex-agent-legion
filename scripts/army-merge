@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "army-merge placeholder: only Codex commander may integrate agent outputs after checking ownership and diff."

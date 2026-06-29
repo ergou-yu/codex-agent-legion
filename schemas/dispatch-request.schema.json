@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/agent-legion/dispatch-request.schema.json",
+  "title": "Codex GPT-5.5 Agent Legion Dispatch Contract",
+  "type": "object",
+  "required": [
+    "task",
+    "commander",
+    "constraints"
+  ],
+  "properties": {
+    "task": {
+      "type": "string",
+      "minLength": 1,
+      "description": "用户原始任务"
+    },
+    "commander": {
+      "type": "object",
+      "required": [
+        "id",
+        "model"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "const": "gpt-5.5"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "max_parallel_agents": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "sensitive": {
+          "type": "boolean"
+        },
+        "allowed_write_scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbidden_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "description": "CLI 或未来算法提取的任务信号",
+      "properties": {
+        "domains": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "code",
+              "research",
+              "browser",
+              "data",
+              "docs",
+              "review",
+              "workflow",
+              "ops"
+            ]
+          }
+        },
+        "complexity": {
+          "enum": [
+            "simple",
+            "standard",
+            "complex",
+            "epic"
+          ]
+        },
+        "risk_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requested_agent_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 5
+        }
+      }
+    },
+    "algorithm_result": {
+      "type": "object",
+      "description": "用户未来算法的输出。CLI 会把它规范化为 dispatch plan。"
+    }
+  }
+}

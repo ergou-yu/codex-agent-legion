@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "workspace_root": ".",
+  "readable_by_default": [
+    "./**"
+  ],
+  "writable_by_default": [
+    "./**"
+  ],
+  "sensitive_patterns": [
+    "**/.env",
+    "**/.env.*",
+    "**/*secret*",
+    "**/*token*",
+    "**/*credential*"
+  ],
+  "external_repo_root": "external-agent-repos",
+  "external_repos_are": "read_only_candidates_until_commander_activates"
+}

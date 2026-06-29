@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+coverage/
+dist/
+external-agent-repos/
+*.log
+*.tgz
+
+logs/runs/*
+!logs/runs/.gitkeep
+
+runs/*
+!runs/.gitkeep

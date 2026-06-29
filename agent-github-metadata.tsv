@@ -1,0 +1,18 @@
+repo	stars	forks	license	pushed_at	url	description
+microsoft/agent-framework	11508	1941	MIT	2026-06-20T15:49:46Z	https://github.com/microsoft/agent-framework	A framework for building, orchestrating and deploying AI agents and multi-agent workflows with support for Python and .NET.
+langchain-ai/langgraph	35321	5924	MIT	2026-06-21T01:21:56Z	https://github.com/langchain-ai/langgraph	Build resilient agents.
+crewAIInc/crewAI	54057	7568	MIT	2026-06-20T17:38:38Z	https://github.com/crewAIInc/crewAI	Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work together seamlessly, tackling complex tasks.
+OpenHands/OpenHands	77879	9901	NOASSERTION	2026-06-20T17:54:08Z	https://github.com/OpenHands/OpenHands	🙌 OpenHands: AI-Driven Development
+bytedance/deer-flow	72159	9790	MIT	2026-06-21T08:08:25Z	https://github.com/bytedance/deer-flow	An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of tasks that could take minutes to hours.
+QwenLM/Qwen-Agent	16588	1651	Apache-2.0	2026-03-04T08:15:07Z	https://github.com/QwenLM/Qwen-Agent	Agent framework and applications built upon Qwen>=3.0, featuring Function Calling, MCP, Code Interpreter, RAG, Chrome extension, etc.
+QwenLM/qwen-code	25403	2543	Apache-2.0	2026-06-21T08:14:10Z	https://github.com/QwenLM/qwen-code	An open-source AI coding agent that lives in your terminal.
+agentscope-ai/agentscope	27030	3039	Apache-2.0	2026-06-19T02:55:23Z	https://github.com/agentscope-ai/agentscope	Build and run agents you can see, understand and trust.
+FoundationAgents/OpenManus	56608	9848	MIT	2026-02-11T13:48:00Z	https://github.com/FoundationAgents/OpenManus	No fortress, purely open ground.  OpenManus is Coming.
+FoundationAgents/MetaGPT	68934	8806	MIT	2026-01-21T10:12:33Z	https://github.com/FoundationAgents/MetaGPT	🌟 The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming
+camel-ai/camel	17240	1961	Apache-2.0	2026-06-17T07:53:19Z	https://github.com/camel-ai/camel	🐫 CAMEL: The first and the best multi-agent framework. Finding the Scaling Law of Agents. https://www.camel-ai.org
+eosphoros-ai/DB-GPT	19035	2743	MIT	2026-06-19T15:32:08Z	https://github.com/eosphoros-ai/DB-GPT	open-source agentic AI data assistant for the next generation of AI + Data products.
+OpenBMB/ChatDev	33514	4174	Apache-2.0	2026-05-27T12:41:14Z	https://github.com/OpenBMB/ChatDev	ChatDev 2.0: Dev All through LLM-powered Multi-Agent Collaboration
+SWE-agent/mini-swe-agent	5308	723	MIT	2026-06-19T00:56:41Z	https://github.com/SWE-agent/mini-swe-agent	The 100 line AI agent that solves GitHub issues or helps you in your command line. Radically simple, no huge configs, no giant monorepo—but scores >74% on SWE-bench verified!
+Aider-AI/aider	46519	4632	Apache-2.0	2026-05-22T14:02:20Z	https://github.com/Aider-AI/aider	aider is AI pair programming in your terminal
+browser-use/browser-use	99796	11129	MIT	2026-06-20T18:21:29Z	https://github.com/browser-use/browser-use	🌐 Make websites accessible for AI agents. Automate tasks online with ease.
+ag2ai/ag2	4693	656	Apache-2.0	2026-06-20T19:25:16Z	https://github.com/ag2ai/ag2	AG2 (formerly AutoGen): The Open-Source AgentOS.Join us at: https://discord.gg/sNGSwQME3x

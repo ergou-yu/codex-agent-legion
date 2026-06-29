@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "army-review placeholder: use Codex reviewer prompt plus project-specific build/test/lint until a concrete review runner is added."

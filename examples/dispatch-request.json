@@ -1,0 +1,31 @@
+{
+  "task": "帮我分析这个项目并修复构建失败，然后检查是否有回归风险",
+  "commander": {
+    "id": "codex-gpt55-commander",
+    "model": "gpt-5.5"
+  },
+  "constraints": {
+    "max_parallel_agents": 5,
+    "sensitive": false,
+    "allowed_write_scopes": [
+      "src/**",
+      "tests/**",
+      "package.json"
+    ],
+    "forbidden_actions": [
+      "git_reset_hard",
+      "force_push",
+      "send_external_messages",
+      "production_write"
+    ]
+  },
+  "signals": {
+    "domains": [
+      "code",
+      "review"
+    ],
+    "complexity": "complex",
+    "risk_flags": [],
+    "requested_agent_count": null
+  }
+}

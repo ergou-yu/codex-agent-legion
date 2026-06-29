@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/agent-legion/task-plan.schema.json",
+  "title": "Codex Agent Legion Task Plan",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "created_at",
+    "commander",
+    "task",
+    "planner",
+    "execution_contract"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "workspace": {
+      "type": "string"
+    },
+    "commander": {
+      "type": "object"
+    },
+    "task": {
+      "type": "string"
+    },
+    "signals": {
+      "type": "object"
+    },
+    "planner": {
+      "type": "object",
+      "required": [
+        "strategy",
+        "selected_agents",
+        "parallel_groups"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string"
+        },
+        "selected_agents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "role",
+              "reason",
+              "count"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "runtime": {
+                "type": "string"
+              },
+              "agent_type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "prompt_template": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "parallel_groups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "commander_only": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "execution_contract": {
+      "type": "object"
+    }
+  }
+}

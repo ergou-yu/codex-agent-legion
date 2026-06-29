@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "strategy": "builtin_first_external_on_demand",
+  "routes": [
+    {
+      "domain": "code",
+      "first_line": [
+        "codex-worker"
+      ],
+      "fallback_candidates": [
+        "aider",
+        "mini-swe-agent",
+        "qwen-code",
+        "openhands"
+      ]
+    },
+    {
+      "domain": "research",
+      "first_line": [
+        "codex-explorer"
+      ],
+      "fallback_candidates": [
+        "deer-flow",
+        "crewAI",
+        "ag2"
+      ]
+    },
+    {
+      "domain": "browser",
+      "first_line": [
+        "codex-explorer"
+      ],
+      "fallback_candidates": [
+        "browser-use"
+      ]
+    },
+    {
+      "domain": "data",
+      "first_line": [
+        "codex-explorer"
+      ],
+      "fallback_candidates": [
+        "dbgpt",
+        "qwen-agent"
+      ]
+    },
+    {
+      "domain": "workflow",
+      "first_line": [
+        "codex-explorer",
+        "codex-worker"
+      ],
+      "fallback_candidates": [
+        "langgraph",
+        "agentscope",
+        "agent-framework"
+      ]
+    },
+    {
+      "domain": "review",
+      "first_line": [
+        "codex-reviewer"
+      ],
+      "fallback_candidates": []
+    }
+  ]
+}

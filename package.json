@@ -1,0 +1,52 @@
+{
+  "name": "codex-agent-legion",
+  "version": "0.1.0",
+  "description": "A local Codex-centered multi-agent planning console with machine-readable dispatch contracts.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "legionctl": "tools/legionctl.js",
+    "army-plan": "scripts/army-plan",
+    "army-doctor": "scripts/army-doctor",
+    "army-run": "scripts/army-run",
+    "army-review": "scripts/army-review",
+    "army-merge": "scripts/army-merge",
+    "army-archive": "scripts/army-archive",
+    "refresh-agent-metadata": "scripts/refresh-agent-metadata"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "agent-github-metadata.tsv",
+    "multi-agent-workflow-rulebook.md",
+    "config/",
+    "docs/",
+    "examples/",
+    "prompts/",
+    "schemas/",
+    "scripts/",
+    "tools/"
+  ],
+  "scripts": {
+    "check:syntax": "node -c tools/legionctl.js",
+    "check:json": "node -e \"const fs=require('fs'); for (const d of ['config','schemas','examples']) for (const f of fs.readdirSync(d)) if (f.endsWith('.json')) JSON.parse(fs.readFileSync(d+'/'+f,'utf8'));\"",
+    "doctor": "node tools/legionctl.js doctor",
+    "plan:demo": "node tools/legionctl.js plan \"给这个仓库做一次代码审查\" --json",
+    "pack:local": "mkdir -p dist && npm pack --pack-destination dist",
+    "test": "npm run check:syntax && npm run check:json && npm run doctor"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "codex",
+    "multi-agent",
+    "agent-orchestration",
+    "cli",
+    "planning",
+    "dispatch"
+  ]
+}

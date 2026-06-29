@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "default_mode": "least_privilege",
+  "filesystem": {
+    "default_read": "workspace",
+    "default_write": "owned_paths_only",
+    "forbidden_path_patterns": [
+      "**/.env",
+      "**/.env.*",
+      "**/*secret*",
+      "**/*token*",
+      "~/.ssh/**",
+      "~/Library/**"
+    ]
+  },
+  "git": {
+    "forbidden_commands": [
+      "git reset --hard",
+      "git checkout -- .",
+      "git clean -fd",
+      "git push --force",
+      "git branch -D"
+    ],
+    "merge_owner": "codex-gpt55-commander"
+  },
+  "network": {
+    "default": "allowed_for_commander_and_research",
+    "external_agent_downloads": "manual_review_first",
+    "unknown_scripts": "read_source_before_run"
+  },
+  "browser": {
+    "login_required": "ask_user_first",
+    "forbidden_without_confirmation": [
+      "payment",
+      "send_message",
+      "send_email",
+      "permission_change",
+      "delete_data"
+    ]
+  },
+  "database": {
+    "default": "read_only",
+    "write_requires": "explicit_user_confirmation"
+  },
+  "cost": {
+    "long_running_or_paid_services": "commander_must_disclose_before_use"
+  }
+}

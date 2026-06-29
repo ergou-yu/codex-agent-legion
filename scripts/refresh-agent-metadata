@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cat <<'MSG'
+refresh-agent-metadata is a reserved entrypoint.
+Use the existing agent-github-metadata.tsv as the current snapshot; refresh should query GitHub metadata only and must not auto-upgrade local repos.
+MSG

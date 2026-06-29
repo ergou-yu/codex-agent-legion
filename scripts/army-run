@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "army-run is intentionally dry-run only for now. Generate a plan with scripts/army-plan, then let Codex commander execute it after review."

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "army-archive placeholder: plan artifacts are already written under logs/runs/ by legionctl."
