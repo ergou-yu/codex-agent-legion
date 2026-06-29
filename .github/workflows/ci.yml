@@ -20,4 +20,6 @@ jobs:
         run: npm test
 
       - name: Build local package
-        run: npm pack --pack-destination dist
+        run: |
+          mkdir -p dist
+          npm pack --pack-destination dist
