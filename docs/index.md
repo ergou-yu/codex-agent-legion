@@ -16,3 +16,5 @@ scripts/army-doctor
 ```
 
 Read the launch article: [把 Codex 变成一支按需调度的 agent 军团](blog/introducing-codex-agent-legion.md).
+
+Read the implementation and GitHub usage guide: [Codex Agent Legion 实现原理与 GitHub 使用指南](implementation-and-usage.md).

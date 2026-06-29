@@ -124,6 +124,7 @@ Sensitive actions such as secrets, login state, payments, outbound messages, pro
 ## Launch Materials
 
 - Blog article: [`docs/blog/introducing-codex-agent-legion.md`](docs/blog/introducing-codex-agent-legion.md)
+- Implementation and GitHub usage guide: [`docs/implementation-and-usage.md`](docs/implementation-and-usage.md)
 - GitHub Pages starter page: [`docs/index.md`](docs/index.md)
 - Cover image: [`docs/assets/agent-legion-cover.png`](docs/assets/agent-legion-cover.png)
 
